@@ -22,8 +22,8 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 
-* @author Marc Geldon <marc.geldon@scalait.de
-* @copyright Copyright (c) 2009 Marc Geldon, SCALA IT (http://www.scalait.de)
+* @author Marc Geldon <mgeldon@mindnet-systemhaus.com>
+* @copyright Copyright (c) 2009-2012 Marc Geldon, MindNet Systemhaus GmbH (http://www.mindnet-systemhaus.com/)
 * @license MIT License
 */
 
@@ -31,7 +31,7 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
 class SiMysqlOptimize extends Job {
 	
 	public function getJobName() {
-		return t("SCALA IT Optimize MySQL database");
+		return t("MindNet Optimize MySQL database");
 	}
 	
 	public function getJobDescription() {

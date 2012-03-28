@@ -22,8 +22,8 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 
-* @author Marc Geldon <marc.geldon@scalait.de
-* @copyright Copyright (c) 2009 Marc Geldon, SCALA IT (http://www.scalait.de)
+* @author Marc Geldon <mgeldon@mindnet-systemhaus.com>
+* @copyright Copyright (c) 2009-2012 Marc Geldon, MindNet Systemhaus GmbH (http://www.mindnet-systemhaus.com/)
 * @license MIT License
 */
 
@@ -32,11 +32,11 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
 class SiMysqlOptimizePackage extends Package {
 
 	protected $pkgHandle = 'si_mysql_optimize';
-	protected $appVersionRequired = '5.3.1';
-	protected $pkgVersion = '1.0'; 
+	protected $appVersionRequired = '5.4.2.2';
+	protected $pkgVersion = '1.1'; 
 	
 	public function getPackageName() {
-		return t("SCALA IT Optimize MySQL database"); 
+		return t("MindNet Optimize MySQL database"); 
 	}	
 	
 	public function getPackageDescription() {
@@ -47,29 +47,11 @@ class SiMysqlOptimizePackage extends Package {
 		$pkg = parent::install();
 		
 		Loader::model("job");
-		
-		if (is_writable("./jobs")) {
-			copy("./packages/si_mysql_optimize/jobs/si_mysql_optimize.php", "./jobs/si_mysql_optimize.php");
-			Job::installByHandle("si_mysql_optimize");
-		} else {
-			throw new Exception(t("Unable to write to 'jobs' directory."));
-		}	
+		Job::installByPackage('si_mysql_optimize', $pkg);
 	}
 	
 	public function uninstall() {
 		$pkg = parent::uninstall();
-		
-		Loader::model("job");
-		
-		if (is_writable("./jobs")) {
-			$job = Job::getByHandle('si_mysql_optimize');
-			if ($job) {
-				$job->uninstall();
-			}
-			unlink("./jobs/si_mysql_optimize.php");
-		} else {
-			throw new Exception(t("Unable to delete from 'jobs' directory."));
-		}
 	}
 }
 ?>
