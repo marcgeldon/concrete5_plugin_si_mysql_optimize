@@ -3,3 +3,4 @@
 1.01 - fixed bug in uninstall procedures, which appeared when job was not activated
 1.1 - updated to work with concrete5 version >= 5.4.2.2
 1.1 - job is no longer copied into the jobs directory, the job is installed via Job::installByPackage()
+1.11 - upgrade function added to package controller

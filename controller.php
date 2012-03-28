@@ -33,7 +33,7 @@ class SiMysqlOptimizePackage extends Package {
 
 	protected $pkgHandle = 'si_mysql_optimize';
 	protected $appVersionRequired = '5.4.2.2';
-	protected $pkgVersion = '1.1'; 
+	protected $pkgVersion = '1.11'; 
 	
 	public function getPackageName() {
 		return t("MindNet Optimize MySQL database"); 
@@ -53,5 +53,24 @@ class SiMysqlOptimizePackage extends Package {
 	public function uninstall() {
 		$pkg = parent::uninstall();
 	}
+	
+	public function upgrade() {
+		parent::upgrade();
+		
+ 		if (is_writable("./jobs")) {
+			$job = Job::getByHandle('si_mysql_optimize');
+			
+			if ($job) {
+				$job->uninstall();
+			}
+			
+			@unlink("./jobs/si_mysql_optimize.php");
+			
+			// We have to uninstall the package on the upgrade because on earlier versions the job was copied in the "/job/" directory.
+			// In the new version we leave it in the "job" directory in the package. But this is the only way to upgrade, because
+			// otherwise we would redeclare the class (here: "/job/si_mysql_optimize.php" and there "/packages/si_mysql_optimize/jobs/si_mysql_optimize.php")
+			$this->uninstall();
+		}
+	}	
 }
 ?>
